@@ -8,11 +8,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace TerrairaAutoFisher
 {
     public class ScreenMonitor
     {
+        private static string previousHash = string.Empty;
+
         /// <summary>
         /// Monitors the screen area for the bobber to appear.
         /// </summary>
@@ -27,7 +30,11 @@ namespace TerrairaAutoFisher
                 //convert the bytes to a string
                 string byteString = ConvertByteArrayToString(bytes);
 
+                //generate a hash from the byte string
                 string currentHash = GenerateHash(byteString);
+
+                //compare the current hash to the previous hash
+                CompareHashes(currentHash);
             }
         }
 
@@ -69,7 +76,7 @@ namespace TerrairaAutoFisher
 
 
         /// <summary>
-        /// 
+        /// Method to convert a byte array to a string
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
@@ -96,7 +103,7 @@ namespace TerrairaAutoFisher
 
 
         /// <summary>
-        ///
+        /// Method to generate a hash from a byte string
         /// </summary>
         /// <param name="byteString"></param>
         /// <returns></returns>
@@ -121,6 +128,31 @@ namespace TerrairaAutoFisher
                 //return the hash string
                 return hashString.ToString();
             }
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
+
+        /// <summary>
+        /// Method to compare the current hash to the previous hash
+        /// </summary>
+        private void CompareHashes(string currentHash)
+        {
+            //check if the previous hash is not empty and the current hash is not equal to the previous hash
+            if (previousHash != null && currentHash != previousHash)
+            {
+                //perform the actions
+                PerformActions();
+
+                //set the previous hash to the current hash
+                previousHash = currentHash;
+            }
+
+            //wait for a short period of time before checking again
+            Thread.Sleep(200);
         }
     }
 }
