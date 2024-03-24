@@ -38,7 +38,11 @@ namespace TerrairaAutoFisher
                 string currentHash = GenerateHash(byteString);
 
                 //compare the current hash to the previous hash
-                CompareHashes(currentHash);
+                if (CompareHashes(currentHash))
+                {
+                    //perform the actions
+                    PerformActions();
+                }
             }
         }
 
@@ -87,16 +91,15 @@ namespace TerrairaAutoFisher
         /// <exception cref="System.NotImplementedException"></exception>
         private string ConvertByteArrayToString(byte[] bytes)
         {
-            //create a new string builder to store the byte string
-            StringBuilder byteString = new StringBuilder();
+            // Use a StringBuilder to efficiently build the string
+            StringBuilder byteString = new StringBuilder(bytes.Length * 4); // Each byte is represented by two characters in hexadecimal
 
-            //convert the byte array to a string
+            // Convert each byte to its hexadecimal representation
             foreach (byte b in bytes)
             {
-                byteString.Append(b.ToString());
+                byteString.Append(b.ToString("X2")); // "X2" ensures each byte is represented by two characters
             }
-            
-            //return the byte string
+
             return byteString.ToString();
         }
 
@@ -143,20 +146,17 @@ namespace TerrairaAutoFisher
         /// <summary>
         /// Method to compare the current hash to the previous hash
         /// </summary>
-        private void CompareHashes(string currentHash)
+        private bool CompareHashes(string currentHash)
         {
             //check if the previous hash is not empty and the current hash is not equal to the previous hash
-            if (previousHash != null && currentHash != previousHash)
+            if (currentHash != previousHash)
             {
-                //perform the actions
-                PerformActions();
-
                 //set the previous hash to the current hash
                 previousHash = currentHash;
+                return true;
             }
 
-            //wait for a short period of time before checking again
-            Thread.Sleep(200);
+            return false;
         }
 
 

@@ -14,8 +14,12 @@ namespace TerrairaAutoFisher
     {
         //create a new screen monitor
         private static ScreenMonitor screenMonitor = new ScreenMonitor();
-        //create a new rectangle to represent the screen area
-        private static Rectangle screenArea = new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
 
         /// <summary>
         /// The main entry point for the application.
@@ -23,6 +27,32 @@ namespace TerrairaAutoFisher
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            run();
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
+
+        /// <summary>
+        /// Method to run the program.
+        /// </summary>
+        private static void run()
+        {
+            //select the screen to monitor
+            int screenIndex = 0;
+
+            //get all screens avaliable
+            Screen[] screens = Screen.AllScreens;
+
+            //get the selected screen
+            Screen selectedScreen = screens[screenIndex];
+
+            //create a new rectangle to represent the screen area
+            Rectangle screenArea = new Rectangle(0, 0, selectedScreen.Bounds.Width, selectedScreen.Bounds.Height);
+
             //monitor the screen area selected
             screenMonitor.MonitorScreenArea(screenArea);
         }
