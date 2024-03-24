@@ -12,18 +12,17 @@ namespace TerrairaAutoFisher
 {
     internal class Program
     {
+        //create a new screen monitor
+        private static ScreenMonitor screenMonitor = new ScreenMonitor();
+        //create a new rectangle to represent the screen area
+        private static Rectangle screenArea = new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            //create a new screen monitor
-            ScreenMonitor screenMonitor = new ScreenMonitor();
-
-            //create a new rectangle to represent the screen area
-            Rectangle screenArea = new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-
             //monitor the screen area selected
             screenMonitor.MonitorScreenArea(screenArea);
         }
