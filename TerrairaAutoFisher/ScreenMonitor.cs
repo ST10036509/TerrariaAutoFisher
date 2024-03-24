@@ -6,6 +6,7 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text;
 
 namespace TerrairaAutoFisher
 {
@@ -57,6 +58,34 @@ namespace TerrairaAutoFisher
 
             //return the screen area as a byte array
             return (byte[])converter.ConvertTo(bitmap, typeof(byte[]));
+        }
+
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private string ConvertByteArrayToString(byte[] bytes)
+        {
+            //create a new string builder to store the byte string
+            StringBuilder byteString = new StringBuilder();
+
+            //convert the byte array to a string
+            foreach (byte b in bytes)
+            {
+                byteString.Append(b.ToString());
+            }
+            
+            //return the byte string
+            return byteString.ToString();
         }
     }
 }
