@@ -6,6 +6,7 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace TerrairaAutoFisher
@@ -42,7 +43,7 @@ namespace TerrairaAutoFisher
         /// <param name="area"></param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public byte[] CaptureScreenArea(Rectangle area)
+        private byte[] CaptureScreenArea(Rectangle area)
         {
             //create a new bitmap to store the screen area
             Bitmap bitmap = new Bitmap(area.Width, area.Height, PixelFormat.Format32bppArgb);
@@ -86,6 +87,40 @@ namespace TerrairaAutoFisher
             
             //return the byte string
             return byteString.ToString();
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="byteString"></param>
+        /// <returns></returns>
+        private string GenerateHash(string byteString)
+        {
+            //create a new SHA256 hash
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                //compute the hash of the byte string
+                byte[] data = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(byteString));
+
+                //create a new string builder to store the hash string
+                StringBuilder hashString = new StringBuilder();
+
+                //convert the hash to a string
+                foreach (byte b in data)
+                {
+                    //format the hash string
+                    hashString.Append(b.ToString("X2"));
+                }
+
+                //return the hash string
+                return hashString.ToString();
+            }
         }
     }
 }
