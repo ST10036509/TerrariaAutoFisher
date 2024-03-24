@@ -12,8 +12,12 @@ using System.Threading;
 
 namespace TerrairaAutoFisher
 {
+    /// <summary>
+    /// Class to monitor the screen area for the bobber to appear.
+    /// </summary>
     public class ScreenMonitor
     {
+        //create a new string to store the previous hash
         private static string previousHash = string.Empty;
 
         /// <summary>
@@ -153,6 +157,24 @@ namespace TerrairaAutoFisher
 
             //wait for a short period of time before checking again
             Thread.Sleep(200);
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+
+
+
+        /// <summary>
+        /// Method to perform the actions
+        /// </summary>
+        private void PerformActions()
+        {
+            //create a new action factory
+            ActionFactory actionFactory = new ActionFactory();
+
+            //display a message to the console
+            actionFactory.DislayConsoleMessage();
         }
     }
 }
